@@ -145,7 +145,3 @@ Eye_Face_Detection/
 ```
 
 ---
-
-## 10. License
-
-```This project is open-source under the **MIT License**.```
