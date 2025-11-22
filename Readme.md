@@ -1,127 +1,151 @@
-# Installation
+# Face & Eye Liveness Detection – Depth Map, Gaze Tracking, and Audio Verification
 
-## Tenserflow setup
+This project implements a complete multimodal authentication system that combines **face liveness detection**, **depth-map analysis**, **eye gaze tracking**, and **audio verification**. It uses computer vision, convolutional neural networks, and audio processing to determine whether a user is genuine or spoofed.
 
-![image](https://github.com/user-attachments/assets/948f95d8-2636-46fd-aedd-96a6976a6120)
+---
 
-Download and install the NVIDIA CUDA Toolkit --  https://developer.nvidia.com/cuda-toolkit
-Download and install cuDNN --  https://developer.nvidia.com/cudnn
+## 1. Project Overview
 
-## Install VS with C++
-(https://visualstudio.microsoft.com/thank-you-downloading-visual-studio/?sku=Community&channel=Release&version=VS2022&source=VSFeaturesPage&passive=true&tailored=cplus&cid=2031#cplusplus)
+The authentication workflow includes:
 
-## Necessary To set the Model
-Dir. : Face live/gaze_tracking
-Create a folder named as "trained_models" inside "Dir. : Face live/gaze_tracking".
-Download this file -- (https://github.com/italojs/facial-landmarks-recognition/blob/master/shape_predictor_68_face_landmarks.dat)
-& move it in "trained_models" folder.
+- Face liveness detection using depth-map prediction  
+- Eye gaze tracking using 68 facial landmarks  
+- Audio verification using live speech recognition  
+- Real-time prediction using OpenCV & TensorFlow  
+- Optional Django-based web interface  
 
-## Upgrade pip (optional but recommended):
+The model is trained using a custom CNN architecture and deployed for real-time authentication.
+
+---
+
+## 2. Installation
+
+### TensorFlow GPU Setup (if using GPU)
+
+Install the following manually:
+
+- **CUDA Toolkit**  
+  https://developer.nvidia.com/cuda-toolkit
+
+- **cuDNN**  
+  https://developer.nvidia.com/cudnn
+
+- **Visual Studio C++ Build Tools** (Required for dlib)  
+  https://visualstudio.microsoft.com/downloads  
+  → Select: **Desktop Development with C++**
+
+---
+
+## 3. Model Setup
+
+Navigate to:
+Face live/gaze_tracking/
+
+Create:
+trained_models/
+Download: shape_predictor_68_face_landmarks.dat
+
+From:  
+https://github.com/italojs/facial-landmarks-recognition/blob/master/shape_predictor_68_face_landmarks.dat
+
+Move it into:
+gaze_tracking/trained_models/
+
+---
+
+## 4. Python Dependencies
+
+### Upgrade pip
+```
 pip install --upgrade pip
+```
 
-## Install OpenCV:
-- pip install opencv-python
-- pip install opencv-contrib-python
-
-## Install TensorFlow:
+### Core Libraries
+```
+pip install opencv-python
+pip install opencv-contrib-python
 pip install tensorflow
-
-## Install NumPy (used for numerical operations in TensorFlow and OpenCV):
 pip install numpy
+```
 
-## Audio
-- pip install opencv-python tensorflow numpy speechrecognition pyaudio pvrecorder
-- pip install SpeechRecognition
-- pip install pyaudio
-- pip install pipwin
-- pipwin install pyaudio
+### Audio Dependencies
+```
+pip install speechrecognition pyaudio pvrecorder
+pip install pipwin
+pipwin install pyaudio
+```
 
-## Requirements
+### Additional Required Libraries
+```
 pip install -r requirements.txt
+pip install gaze-tracking dlib imutils
+```
+---
 
-## Additional Installation
-pip install gaze-tracking
-pip install opencv-python dlib imutils
-
-# Create a virtual environment(------If needed-----)
+## 5. Virtual Environment (Optional)
+```
 python -m venv venv
 venv\Scripts\activate
+```
+---
 
-## To Run the model
+## 6. Running the Project
+### Train the Model
+```
 python FaceEye_Train.py
-
-## Run to the Web server
-- cd verification_project
-- python manage.py runserver
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- # To create dataset Run :
-python data.py
-
-# To Train and Extract the model Run :
-python train.py
-
-# To predict the realtime face liveness
-python prediction.py -->
+```
+
+### Run the Web Server (Django)
+```
+cd verification_project
+python manage.py runserver
+```
+
+---
+
+## 7. System Architecture
+
+### Depth Map CNN Model
+- 3 convolutional layers (ReLU)
+- 1 fully connected output layer
+- Trained for **10 epochs**
+- Batch size: **32**
+- Train-test split: **75:25**
+
+### Real-Time Authentication Pipeline
+1. User initiates authentication  
+2. System displays lighting/distance instructions  
+3. Gaze tracking begins  
+4. User reads text for audio verification  
+5. Depth-map based liveness detection  
+6. Combined result → **Success / Failure**
+
+---
+
+## 8. Troubleshooting
+
+- Ensure camera permissions are enabled  
+- Use a well-lit environment  
+- Reduce background noise for audio tests  
+- Reinstall PyAudio with pipwin if errors occur  
+
+---
+
+## 9. Repository Structure
+```
+Eye_Face_Detection/
+│
+├── FaceEye_Train.py
+├── verification_project/
+├── gaze_tracking/
+│ └── trained_models/
+│ └── shape_predictor_68_face_landmarks.dat
+├── requirements.txt
+└── README.md
+```
+
+---
+
+## 10. License
+
+```This project is open-source under the **MIT License**.```
